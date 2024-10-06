@@ -17,9 +17,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.auth.login('admin', 'WarPa$$').subscribe(user => {
-      console.log(user)
-    })
+
   }
 
 }
