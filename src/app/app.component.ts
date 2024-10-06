@@ -12,13 +12,14 @@ import { JwtAuthService } from './jwt-auth.service';
 export class AppComponent implements OnInit {
   title = 'warships2024';
 
-  constructor(public jwt: JwtAuthService) {
+  constructor(public auth: JwtAuthService) {
 
   }
 
   ngOnInit(): void {
-    this.jwt.login('admin', 'WarPa$$').subscribe(user => {
+    this.auth.login('admin', 'WarPa$$').subscribe(user => {
       console.log(user)
     })
   }
+
 }

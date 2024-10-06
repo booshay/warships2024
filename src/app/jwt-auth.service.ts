@@ -23,6 +23,22 @@ export class JwtAuthService {
 
   baseUrl = 'https://www.warshipapi.booshay.info/'
 
+  register(username, password) {
+    username = username.toLowerCase();
+    return this.http.post<User>(this.baseUrl + "register", { user: username, pass: password })
+      .pipe(catchError(this.handleError))
+      .pipe(map(user => {
+        // login successful if there's a jwt token in the response
+        if (user.user && user.token) {
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.currentUserSubject.next(user);
+          this.router.navigateByUrl('/mines');
+        }
+        return user;
+      }));
+  }
+
   login(username, password) {
     username = username.toLowerCase();
     console.log(username, password)
@@ -42,6 +58,12 @@ export class JwtAuthService {
 
   handleError(error: HttpErrorResponse) {
     return throwError(error);
+  }
+
+  logout() {
+    // remove user from local storage to log user out
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
   }
 
 }
