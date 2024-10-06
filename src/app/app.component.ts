@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { JwtAuthService } from './jwt-auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,16 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'warships2024';
+
+  constructor(public jwt: JwtAuthService) {
+
+  }
+
+  ngOnInit(): void {
+    this.jwt.login('admin', 'WarPa$$').subscribe(user => {
+      console.log(user)
+    })
+  }
 }
