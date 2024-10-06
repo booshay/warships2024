@@ -5,13 +5,14 @@ import { RegisterComponent } from './register/register.component';
 import { RelicsComponent } from './relics/relics.component';
 import { RssComponent } from './rss/rss.component';
 import { MinesComponent } from './mines/mines.component';
+import { jwtGuard } from './jwt.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
-    { path: 'query', component: QueryComponent },
+    { path: 'query', component: QueryComponent, canActivate: [jwtGuard] },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'relics', component: RelicsComponent },
-    { path: 'rss', component: RssComponent },
-    { path: 'mines', component: MinesComponent }
+    { path: 'relics', component: RelicsComponent, canActivate: [jwtGuard] },
+    { path: 'rss', component: RssComponent, canActivate: [jwtGuard] },
+    { path: 'mines', component: MinesComponent, canActivate: [jwtGuard] }
 ];
