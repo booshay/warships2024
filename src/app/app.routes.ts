@@ -6,6 +6,7 @@ import { RelicsComponent } from './relics/relics.component';
 import { RssComponent } from './rss/rss.component';
 import { MinesComponent } from './mines/mines.component';
 import { jwtGuard } from './jwt.guard';
+import { NavbarComponent } from './navbar/navbar.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },

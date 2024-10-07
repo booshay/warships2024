@@ -1,0 +1,53 @@
+/* General navbar styling */
+.navbar {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding-right: 20px; /* Add padding on the right */
+}
+
+/* Active link styling */
+.nav-link.active {
+  color: #2c1874 !important;
+  font-weight: bold;
+  border-bottom: 2px solid #6149b4;
+  background-color: #f0f0f0;
+  padding: 10px 15px;
+}
+
+/* Hover effect for nav links */
+.nav-link:hover {
+  color: #6149b4;
+  background-color: #ececec;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Logout button styling */
+.logout-btn {
+  border: none;
+  color: #fff !important;
+  background-color: #dc3545;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #c82333;
+}
+
+/* Styling for the active page text */
+.active-page {
+  color: #2c1874;
+  font-weight: bold;
+  margin-left: 15px;
+  text-transform: uppercase;
+}
+
+/* Adjust padding for navbar in smaller viewports */
+@media (max-width: 767px) {
+  .navbar .nav-link {
+    padding: 8px 10px;
+  }
+  .navbar {
+    padding-right: 15px; /* Slightly smaller padding on small screens */
+  }
+}
