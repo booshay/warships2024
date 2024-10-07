@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { JwtAuthService } from '../jwt-auth.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-
-
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +15,7 @@ export class LoginComponent {
   loginForm: FormGroup;
 
   constructor(
-    private fb: FormBuilder, public jwtAuth: JwtAuthService
+    private fb: FormBuilder, public jwtAuth: JwtAuthService, public messageService: MessageService
   ) {
     this.loginForm = this.fb.group({
       username: '',
@@ -36,7 +35,7 @@ export class LoginComponent {
         //
       },
         (error) => {
-          //this.messageService.showError(JSON.stringify(error.error.error), 'Error');
+          this.messageService.showError(JSON.stringify(error.error.error), 'Error');
           this.loginForm.reset();
         }
       )
