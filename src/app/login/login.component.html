@@ -1,1 +1,10 @@
-<p>login works!</p>
+<div class="login-page">
+    <div class="form">
+        <form [formGroup]="loginForm" class="login-form">
+            <input #nameRef type='text' matInput placeholder="Username" formControlName="username" required>
+            <input type='password' matInput placeholder="Password" formControlName="password" required>
+            <button type="submit" [disabled]="!loginForm.valid" (click)="login()">login</button>
+            <p class="message">Not registered? <a href="/register">Create an account</a></p>
+        </form>
+    </div>
+</div>
