@@ -45,3 +45,103 @@
             (click)="addMine()">Submit Form</button>
     </form>
 </div>
+
+<div>
+    <!--Filter Area-->
+    <p>------------------------------------------------------</p>
+    <p>Select level first, then mine type</p>
+    <mat-radio-group class="radio-group" [(ngModel)]="lvlvalue">
+        <mat-radio-button class="radio-button" *ngFor="let level of levels" [value]="level"
+            (click)="applyRadioFilter(level)">
+            {{level}}</mat-radio-button>
+    </mat-radio-group>
+    <mat-radio-group class="radio-group" [(ngModel)]="typevalue">
+        <mat-radio-button class="radio-button" *ngFor="let type of tileTypes" [value]="type"
+            (click)="applyRadioFilter2(type)">
+            {{type}}</mat-radio-button>
+    </mat-radio-group>
+
+    <div class="borderRutile">
+        <!---->
+        <p>Input the X-Y for the bottom left coord of the rutile area</p>
+        <form [formGroup]="rutileForm">
+            <mat-form-field class="padding">
+                <input type="tel" matInput placeholder="X" formControlName="x" required>
+            </mat-form-field>
+
+            <mat-form-field class="padding">
+                <input type="tel" matInput placeholder="Y" formControlName="y" required>
+            </mat-form-field>
+
+            <button mat-stroked-button color="primary" type="submit" [disabled]="!rutileForm.valid"
+                (click)="rutileFilter()">Rutile</button>
+        </form>
+    </div>
+
+    <!--NewFOrm-->
+    <div class="borderRutile">
+        <!---->
+        <p>Input the zone number, zone 1 is the top left, 3 is top right, 6 middle right... etc</p>
+        <form [formGroup]="zoneForm">
+            <mat-form-field class="padding">
+                <input type="tel" matInput placeholder="Z" formControlName="z" required>
+            </mat-form-field>
+
+            <button mat-stroked-button color="primary" type="submit" [disabled]="!zoneForm.valid"
+                (click)="zoneFilter()">Zone</button>
+        </form>
+    </div>
+    <!--EndNewFOrm-->
+</div>
+
+<div>
+    <!--The Table-->
+    <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="lvl">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> LVL </th>
+            <td mat-cell *matCellDef="let element"> {{element.lvl}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+            <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="x">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> X </th>
+            <td mat-cell *matCellDef="let element"> {{element.x}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="y">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Y </th>
+            <td mat-cell *matCellDef="let element"> {{element.y}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="enhanced">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Enhanced </th>
+            <td class="enhancedCol" mat-cell *matCellDef="let element"> {{element.enhanced}}
+                <mat-select class="borderSelect" ngModel (ngModelChange)="updateMine(element.mine_id, $event)">
+                    <mat-option *ngFor="let enhance of enhancements" [value]="enhance">
+                        {{enhance}}
+                    </mat-option>
+                </mat-select>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef> Delete </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button color="warn" *ngIf="element.user_name==user.user"
+                    (click)="deleteMine(element.mine_id)">
+                    <mat-icon class="mat-18">delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator>
+</div>
