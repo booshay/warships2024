@@ -1,0 +1,61 @@
+
+.border {
+  width: 25%;
+  border-style: double;
+}
+
+.borderRutile {
+  width: 300px;
+  border-style: double;
+}
+
+.borderSelect {
+  width: 0;
+  height: 0;
+  margin: 0 4px;
+}
+.padding {
+ margin: 10px;
+}
+
+table {
+  width: 33%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin-bottom: 70px;
+
+}
+
+th.mat-header-cell {
+  text-align: left;
+
+ }
+
+tr:nth-child(even){background-color: #f2f2f2;}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background-color: #4CAF50;
+  color: white;
+}
+
+.enhancedCol {
+  text-align: center !important;
+  width: 5%;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.radio-button {
+  margin: 5px;
+}
+
+ .submit-btn{
+  margin-bottom: 40px;
+ }

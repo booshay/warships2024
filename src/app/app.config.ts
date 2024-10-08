@@ -10,5 +10,5 @@ import { provideToastr } from 'ngx-toastr';
 import { jwtInterceptor } from './jwt.interceptor';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideToastr(), provideHttpClient(withInterceptors([jwtInterceptor])), provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideAnimationsAsync()]
+  providers: [provideToastr(), provideHttpClient(withInterceptors([jwtInterceptor])), provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideAnimationsAsync(), provideAnimationsAsync()]
 };
