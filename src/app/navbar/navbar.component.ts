@@ -22,6 +22,7 @@ export class NavbarComponent {
 
   page: string;
   isAdmin: Boolean;
+  hide: false //this hides navlinks
 
   signOut() {
     this.router.navigateByUrl('/login');

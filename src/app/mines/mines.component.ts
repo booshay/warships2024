@@ -28,7 +28,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [NavbarComponent, FormsModule, ReactiveFormsModule, MatIconModule, MatTableModule, MatButtonModule, MatRadioModule, MatSelectModule, MatPaginatorModule, MatSortModule, CommonModule, MatFormFieldModule, MatInputModule],
   templateUrl: './mines.component.html',
-  styleUrl: './mines.component.css'
+  styleUrl: './mines.component.css',
 })
 export class MinesComponent implements OnInit {
 
@@ -97,12 +97,13 @@ export class MinesComponent implements OnInit {
       this.isAdmin = data.user == "admin"
       this.psqlService.getCoords("mines", this.user)
         .subscribe(mine => {
-          console.log(mine)
           this.dataSource.data = mine;
+          this.dataSource.paginator = this.paginator; // Set the paginator here
           this.dataSource.sort = this.sort;
         });
     })
   }
+
   onKeydown(event) {
     if (event.key === "ArrowRight") {
       this.nameElementRefy.nativeElement.focus();
@@ -207,7 +208,6 @@ export class MinesComponent implements OnInit {
       filterValue = '';
     }
     this.dataSource.filter = filterValue.toString().trim().toLowerCase();
-    console.log(this.dataSource.filter)
   }
 
   applyRadioFilter2(filterValue: string) {
@@ -218,7 +218,6 @@ export class MinesComponent implements OnInit {
     //filterValue = '';
     //}
     this.dataSource.filter = filterValue.toString();
-    console.log(this.dataSource.filter)
   }
 
   rutileFilter() {

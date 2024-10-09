@@ -16,8 +16,6 @@ export class PsqlService {
 
   getCoords(type: string, user: any): Observable<any> {
     const body = { type, user }; // Structure the request body
-    console.log(`${this.baseUrl}get${type}`, body); // Logging for debugging
-
     return this.http.post<any>(`${this.baseUrl}get${type}`, body); // Send the structured body
   }
 

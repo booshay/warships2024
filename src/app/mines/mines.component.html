@@ -94,7 +94,7 @@
     <!--EndNewFOrm-->
 </div>
 
-<div>
+<div class="mytable">
     <!--The Table-->
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="lvl">
@@ -119,26 +119,18 @@
 
         <ng-container matColumnDef="enhanced">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Enhanced </th>
-            <td class="enhancedCol" mat-cell *matCellDef="let element"> {{element.enhanced}}
-                <mat-select class="borderSelect" ngModel (ngModelChange)="updateMine(element.mine_id, $event)">
-                    <mat-option *ngFor="let enhance of enhancements" [value]="enhance">
-                        {{enhance}}
-                    </mat-option>
-                </mat-select>
-            </td>
+            <td mat-cell *matCellDef="let element"> {{element.enhanced}} </td>
         </ng-container>
 
         <ng-container matColumnDef="delete">
             <th mat-header-cell *matHeaderCellDef> Delete </th>
             <td mat-cell *matCellDef="let element">
-                <button mat-icon-button color="warn" *ngIf="element.user_name==user.user"
+                <button mat-icon-button color="warn" *ngIf="element.user_name == user.user"
                     (click)="deleteMine(element.mine_id)">
                     <mat-icon class="mat-18">delete</mat-icon>
                 </button>
             </td>
         </ng-container>
-
-
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

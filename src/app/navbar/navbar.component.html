@@ -6,11 +6,11 @@
 
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav me-auto">
-            <li class="nav-item">
+            <li *ngIf="hide" class="nav-item">
                 <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"
                     routerLink="/relics">Relics</a>
             </li>
-            <li class="nav-item">
+            <li *ngIf="hide" class="nav-item">
                 <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"
                     routerLink="/rss">RSS</a>
             </li>
