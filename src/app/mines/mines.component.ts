@@ -93,16 +93,22 @@ export class MinesComponent implements OnInit {
 
   ngOnInit(): void {
     this.auth.currentUser.subscribe(data => {
-      this.user = data;
-      this.isAdmin = data.user == "admin"
-      this.psqlService.getCoords("mines", this.user)
-        .subscribe(mine => {
-          this.dataSource.data = mine;
-          this.dataSource.paginator = this.paginator; // Set the paginator here
-          this.dataSource.sort = this.sort;
-        });
-    })
+      if (data && data.user) {  // Check if data and data.user are not null
+        this.user = data;
+        this.isAdmin = data.user === "admin";
+        this.psqlService.getCoords("mines", this.user)
+          .subscribe(mine => {
+            this.dataSource.data = mine;
+            this.dataSource.paginator = this.paginator; // Set the paginator here
+            this.dataSource.sort = this.sort;
+          });
+      } else {
+        // Handle the case when there is no user (e.g., user is logged out)
+        this.router.navigateByUrl('/login');
+      }
+    });
   }
+
 
   onKeydown(event) {
     if (event.key === "ArrowRight") {
