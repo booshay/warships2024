@@ -1,1 +1,45 @@
-<p>query works!</p>
+<app-navbar></app-navbar>
+<div class="query-page">
+    <div class="form">
+        <form [formGroup]="queryForm" class="query-form">
+
+            <textarea #nameRef placeholder="Query" formControlName="query" rows="4" cols="50"></textarea>
+            <button type="submit" [disabled]="!queryForm.valid" (click)="runQuery()">Execute</button>
+        </form>
+    </div>
+</div>
+<button class="randomBtn" (click)="random()">Random 10</button>
+<h3>{{qty}}</h3>
+<!--The Table-->
+<div>
+    <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="lvl">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> LVL </th>
+            <td mat-cell *matCellDef="let element"> {{element.lvl}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+            <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="x">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> X </th>
+            <td mat-cell *matCellDef="let element"> {{element.x}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="y">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Y </th>
+            <td mat-cell *matCellDef="let element"> {{element.y}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="enhanced">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Enhanced </th>
+            <td mat-cell *matCellDef="let element"> {{element.enhanced}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator>
+</div>

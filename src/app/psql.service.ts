@@ -33,9 +33,9 @@ export class PsqlService {
     return this.http.put<any>(`${this.baseUrl}${type}/${id}`, body); // Put request
   }
 
-  runQuery(query: string): Observable<any> {
-    const body = { query }; // Wrap query string in body
-    return this.http.post<any>(`${this.baseUrl}query`, body); // Post query
+  runQuery(query: { query: string }): Observable<any> {
+    //  const body = { query }; // Wrap query string in body
+    return this.http.post<any>(`${this.baseUrl}query`, query); // Post query
   }
 
   coordCheck(coords: any): Observable<any> {
