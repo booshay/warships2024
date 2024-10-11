@@ -1,1 +1,18 @@
-<p>register works!</p>
+<div class="login-page">
+    <div class="form">
+        <form [formGroup]="registrationForm" class="login-form">
+            <input autocomplete="on" type='text' matInput placeholder="Username minimum 3 characters"
+                formControlName="username">
+            <input autocomplete="off" type='password' matInput placeholder="Password minimum 6 characters"
+                formControlName="password">
+            <input autocomplete="off" type='password' [class.is-invalid]="!!registrationForm.errors?.['misMatch']"
+                matInput placeholder="Confirm Password" formControlName="confirmPassword" required>
+            <br>
+            <button class="button" type="submit"
+                [disabled]="!registrationForm.valid || !!registrationForm.errors?.['misMatch']"
+                (click)="register()">Register</button>
+            <p class="message">Already registered? <a href="/login">Login</a></p>
+            <small class="text-danger" *ngIf="!!registrationForm.errors?.['misMatch']">Passwords do not match</small>
+        </form>
+    </div>
+</div>
