@@ -21,11 +21,13 @@
         </mat-form-field>
 
         <mat-form-field class="padding">
-            <input (keydown)="onKeydown($event)" #xRef type="tel" matInput placeholder="X" formControlName="x" required>
+            <mat-label>X</mat-label>
+            <input (keydown)="onKeydown($event)" #xRef type="tel" matInput formControlName="x" required>
         </mat-form-field>
 
         <mat-form-field class="padding">
-            <input #yRef type="tel" matInput placeholder="Y" formControlName="y" required>
+            <mat-label>Y</mat-label>
+            <input #yRef type="tel" matInput formControlName="y" required>
         </mat-form-field>
 
         <mat-form-field class="padding">
@@ -41,8 +43,8 @@
             *ngIf="!myForm.valid && isAdmin">Coord
             Check</button>
 
-        <button class="submit-btn" mat-stroked-button color="primary" type="submit" [disabled]="!myForm.valid"
-            (click)="addMine()">Submit Form</button>
+        <button mat-stroked-button color="primary" type="submit" [disabled]="!myForm.valid" (click)="addMine()">Submit
+            Form</button>
     </form>
 </div>
 
