@@ -10,9 +10,10 @@
 }
 
 .borderSelect {
-  width: 0;
-  height: 0;
-  margin: 0 4px;
+  width: 20px; /* Set a small width to keep the column narrow */
+  min-width: 50px; /* Ensure the dropdown has enough space to display */
+  height: auto; /* Auto height for proper dropdown behavior */
+  margin: 0 4px; /* Keep the margin as needed */
 }
 .padding {
  margin: 10px;
