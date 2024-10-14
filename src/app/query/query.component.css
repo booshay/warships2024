@@ -1,5 +1,16 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+.borderSelect {
+  width: 20px;
+  /* Set a small width to keep the column narrow */
+  min-width: 50px;
+  /* Ensure the dropdown has enough space to display */
+  height: auto;
+  /* Auto height for proper dropdown behavior */
+  margin: 0 4px;
+  /* Keep the margin as needed */
+}
+
 .randomBtn {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;

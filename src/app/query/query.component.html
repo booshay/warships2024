@@ -36,7 +36,13 @@
 
         <ng-container matColumnDef="enhanced">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Enhanced </th>
-            <td mat-cell *matCellDef="let element"> {{element.enhanced}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.enhanced}}
+                <mat-select class="borderSelect" ngModel (ngModelChange)="updateMine(element.mine_id, $event)">
+                    <mat-option *ngFor="let enhance of enhancements" [value]="enhance">
+                        {{enhance}}
+                    </mat-option>
+                </mat-select>
+            </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

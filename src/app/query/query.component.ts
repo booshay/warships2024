@@ -23,7 +23,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-query',
   standalone: true,
-  imports: [NavbarComponent, MatSortModule, MatTableModule, MatPaginatorModule, MatSelectModule, MatFormFieldModule, FormsModule, ReactiveFormsModule],
+  imports: [NavbarComponent, FormsModule, ReactiveFormsModule, MatIconModule, MatTableModule, MatButtonModule, MatRadioModule, MatSelectModule, MatPaginatorModule, MatSortModule, CommonModule, MatFormFieldModule, MatInputModule],
   templateUrl: './query.component.html',
   styleUrl: './query.component.css'
 })
@@ -73,7 +73,12 @@ export class QueryComponent implements OnInit {
     this.queryForm = this.fb.group({
       query: 'SELECT * FROM (SELECT DISTINCT ON (position) * FROM mines) t ORDER BY RANDOM() LIMIT 30'
     })
+  }
 
+  updateMine(id: number, enhancement: number) {
+    this.psqlService.updateCoord("mines", id, enhancement).subscribe(() => {
+      this.ngOnInit();
+    })
   }
 
   runQuery() {
