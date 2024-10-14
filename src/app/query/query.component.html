@@ -10,8 +10,9 @@
 </div>
 <button class="randomBtn" (click)="random()">Random 10</button>
 <h3>{{qty}}</h3>
+
 <!--The Table-->
-<div>
+<div class="mytable">
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="lvl">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> LVL </th>

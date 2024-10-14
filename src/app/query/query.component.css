@@ -35,6 +35,10 @@ h3 {
   overflow: hidden;
 }
 
+.mytable {
+  width: 33%;
+}
+
 .form {
   position: relative;
   z-index: 1;
@@ -168,7 +172,7 @@ tr:nth-child(even) {
 th {
   padding-top: 12px;
   padding-bottom: 12px;
-  background-color: #4CAF50;
+  background-color: #754caf !important;
   color: white;
 }
 
