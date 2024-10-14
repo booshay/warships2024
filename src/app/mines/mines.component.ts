@@ -246,7 +246,6 @@ export class MinesComponent implements OnInit {
       const isYInRange = yValue >= Number(filter.y) && yValue < Number(filter.y) + 100;
 
       // Return true only if both conditions are met
-      console.log(isXInRange, isYInRange, xValue, yValue)
       return isXInRange && isYInRange;
     };
 
@@ -255,52 +254,24 @@ export class MinesComponent implements OnInit {
   }
 
 
-  zoneFilter() { // { z: 4, x: 0, y: 201 }
+
+  zoneFilter() {  //    { z: 4, x: 0, y: 201 }
     const formValue: Filter = this.zoneForm.value;
 
-    // Set the filterPredicate
     this.dataSource.filterPredicate = (data, filterString: string) => {
-      const filter: Filter = JSON.parse(filterString); // Ensure you provide a valid JSON string
+      const filter: Filter = JSON.parse(filterString);
 
-      const zone = this.zones.find(({ z }) => z === filter.z);
-
-      // Check if zone is defined before accessing its properties
-      if (!zone) {
-        return false; // If no zone found, don't include this data entry
-      }
-
-      return (
-        Number(data.x) > zone.x &&
-        Number(data.x) < zone.x + 200 &&
-        Number(data.y) > zone.y &&
-        Number(data.y) < zone.y + 200
-      );
+      const zone = this.zones.find(({ z }) => z === Number(filter['z']));
+      return Number(data.x) > Number(zone!['x']) && Number(data.x) < Number(zone!['x']) + 200 && Number(data.y) > Number(zone!['y'])
+        && Number(data.y) < Number(zone!['y']) + 200;
     };
-
-    // Validate formValue before setting filter
-    if (formValue.z != null && formValue.z >= 0 && formValue.z <= 9) { // Check for null or undefined
-      this.dataSource.filter = JSON.stringify(formValue); // Ensure formValue is of type Filter
-    } else {
-      this.messageService.showError('Please enter a number 0-9', 'Error');
+    if (formValue.z! >= 0 && formValue.z! <= 9) {
+      this.dataSource.filter = JSON.stringify(formValue);;
+    }
+    else {
+      this.messageService.showError('Please enter a number 0-9', 'Error')
     }
   }
-
-
-
-  /*  zoneFilter() {  //    { z: 4, x: 0, y: 201 }
-     const formValue = this.zoneForm.value;
-     this.dataSource.filterPredicate = (data, filter: string) => {
-       const zone: any = this.zones.find(({ z }) => z === Number(filter['z']));
-       return Number(data.x) > Number(zone['x']) && Number(data.x) < Number(zone['x']) + 200 && Number(data.y) > Number(zone['y'])
-         && Number(data.y) < Number(zone['y']) + 200;
-     };
-     if (formValue.z >= 0 && formValue.z <= 9) {
-       this.dataSource.filter = formValue;
-     }
-     else {
-       this.messageService.showError('Please enter a number 0-9', 'Error')
-     }
-   } */
 
 
 }
