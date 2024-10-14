@@ -242,10 +242,11 @@ export class MinesComponent implements OnInit {
       const yValue = Number(data.y);
 
       // Implement filtering logic: check if x and y are strictly between 200 and 299
-      const isXInRange = xValue >= 200 && xValue < 300;
-      const isYInRange = yValue >= 200 && yValue < 300;
+      const isXInRange = xValue >= Number(filter.x) && xValue < Number(filter.x) + 100;
+      const isYInRange = yValue >= Number(filter.y) && yValue < Number(filter.y) + 100;
 
       // Return true only if both conditions are met
+      console.log(isXInRange, isYInRange, xValue, yValue)
       return isXInRange && isYInRange;
     };
 
