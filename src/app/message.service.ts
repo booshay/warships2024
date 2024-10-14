@@ -8,11 +8,11 @@ export class MessageService {
 
   constructor(private toastr: ToastrService) { }
 
-  showSuccess(message, title) {
+  showSuccess(message: string, title: string) {
     this.toastr.success(message, title, { 'positionClass': 'toast-top-center' });
   }
 
-  showError(message, title) {
+  showError(message: string, title: string) {
     this.toastr.error(message, title, { 'positionClass': 'toast-top-center' });
   }
 }

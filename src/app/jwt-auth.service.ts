@@ -13,17 +13,25 @@ import { User } from './_models/user';
 })
 export class JwtAuthService {
 
-  private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
+  private currentUserSubject: BehaviorSubject<User | null>;
+  public currentUser: Observable<User | null>;
+
+  /*   constructor(private http: HttpClient, public router: Router) {
+      this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+      this.currentUser = this.currentUserSubject.asObservable();
+    } */
 
   constructor(private http: HttpClient, public router: Router) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    const currentUserJson = localStorage.getItem('currentUser');
+    this.currentUserSubject = new BehaviorSubject<User | null>(
+      currentUserJson ? JSON.parse(currentUserJson) : null
+    );
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
   baseUrl = 'https://www.warshipapi.booshay.info/'
 
-  register(username, password) {
+  register(username: string, password: string) {
     username = username.toLowerCase();
     return this.http.post<User>(this.baseUrl + "register", { user: username, pass: password })
       .pipe(catchError(this.handleError))
@@ -39,7 +47,7 @@ export class JwtAuthService {
       }));
   }
 
-  login(username, password) {
+  login(username: string, password: string) {
     username = username.toLowerCase();
     console.log(username, password)
     return this.http.post<any>(this.baseUrl + "login", { user: username, pass: password })

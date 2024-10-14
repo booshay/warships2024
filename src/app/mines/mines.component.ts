@@ -5,6 +5,7 @@ import { MessageService } from '../message.service';
 import { Router } from '@angular/router';
 import { JwtAuthService } from '../jwt-auth.service';
 import { User } from '../_models/user';
+import { Filter } from '../_models/filter';
 
 //material
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -63,12 +64,12 @@ export class MinesComponent implements OnInit {
   levelsSelect = ['44', '46', '48', '50'];
   enhancements = ['0', '50', '100', '150', '200'];
   tileTypes = ['Gold', 'Iron', 'Oil', 'Copper', 'Uranium'];
-  coordCheckResult: {}
-  isAdmin: Boolean;
-  user: User;
-  lvlvalue: number;
-  enhanced: number;
-  typevalue: string;
+  coordCheckResult!: {}
+  isAdmin!: Boolean;
+  user!: User;
+  lvlvalue!: number;
+  enhanced!: number;
+  typevalue!: string;
   temp = '';
   zones = [
     { z: 1, x: 0, y: 401 },
@@ -83,13 +84,13 @@ export class MinesComponent implements OnInit {
   ]
 
 
-  @ViewChild('xRef') nameElementRef: ElementRef;
-  @ViewChild('yRef') nameElementRefy: ElementRef;
-  @ViewChild('nameRef2') nameElementRef2: MatSelect;
-  @ViewChild('nameRef3') nameElementRef3: MatSelect;
+  @ViewChild('xRef') nameElementRef!: ElementRef;
+  @ViewChild('yRef') nameElementRefy!: ElementRef;
+  @ViewChild('nameRef2') nameElementRef2!: MatSelect;
+  @ViewChild('nameRef3') nameElementRef3!: MatSelect;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   ngOnInit(): void {
     this.auth.currentUser.subscribe(data => {
@@ -110,7 +111,7 @@ export class MinesComponent implements OnInit {
   }
 
 
-  onKeydown(event) {
+  onKeydown(event: any) {
     if (event.key === "ArrowRight") {
       this.nameElementRefy.nativeElement.focus();
     }
@@ -156,7 +157,7 @@ export class MinesComponent implements OnInit {
     })
   }
 
-  updateMine(id, enhancement) {
+  updateMine(id: number, enhancement: number) {
     this.psqlService.updateCoord("mines", id, enhancement).subscribe(() => {
       this.ngOnInit();
     })
@@ -172,7 +173,7 @@ export class MinesComponent implements OnInit {
     }
   }
 
-  validCoords(data) {
+  validCoords(data: any) {
     if (data.x <= 600 && data.x >= 1 && data.y >= 1 && data.y <= 600) {
       return true;
     } else {
@@ -227,28 +228,78 @@ export class MinesComponent implements OnInit {
   }
 
   rutileFilter() {
-    const formValue = this.rutileForm.value;
-    this.dataSource.filterPredicate = (data, filter: string) => {
-      return Number(data.x) > Number(filter['x']) && Number(data.x) < Number(filter['x']) + 100 && Number(data.y) > Number(filter['y'])
-        && Number(data.y) < Number(filter['y']) + 100;
+    const formValue: Filter = this.rutileForm.value;
+
+    this.dataSource.filterPredicate = (data, filterString: string) => {
+      const filter: Filter = JSON.parse(filterString); // Ensure you provide a valid JSON string
+
+      // Check if the filter values are present
+      if (filter.x === undefined || filter.y === undefined) {
+        return true; // Allow all items if filter values are not defined
+      }
+
+      const xValue = Number(data.x);
+      const yValue = Number(data.y);
+
+      // Implement filtering logic: check if x and y are strictly between 200 and 299
+      const isXInRange = xValue >= 200 && xValue < 300;
+      const isYInRange = yValue >= 200 && yValue < 300;
+
+      // Return true only if both conditions are met
+      return isXInRange && isYInRange;
     };
-    this.dataSource.filter = formValue; // x&Y of lower left
+
+    // Set the filter for the dataSource
+    this.dataSource.filter = JSON.stringify(formValue); // Ensure formValue is of type Filter
   }
 
-  zoneFilter() {  //    { z: 4, x: 0, y: 201 }
-    const formValue = this.zoneForm.value;
-    this.dataSource.filterPredicate = (data, filter: string) => {
-      const zone = this.zones.find(({ z }) => z === Number(filter['z']));
-      return Number(data.x) > Number(zone['x']) && Number(data.x) < Number(zone['x']) + 200 && Number(data.y) > Number(zone['y'])
-        && Number(data.y) < Number(zone['y']) + 200;
+
+  zoneFilter() { // { z: 4, x: 0, y: 201 }
+    const formValue: Filter = this.zoneForm.value;
+
+    // Set the filterPredicate
+    this.dataSource.filterPredicate = (data, filterString: string) => {
+      const filter: Filter = JSON.parse(filterString); // Ensure you provide a valid JSON string
+
+      const zone = this.zones.find(({ z }) => z === filter.z);
+
+      // Check if zone is defined before accessing its properties
+      if (!zone) {
+        return false; // If no zone found, don't include this data entry
+      }
+
+      return (
+        Number(data.x) > zone.x &&
+        Number(data.x) < zone.x + 200 &&
+        Number(data.y) > zone.y &&
+        Number(data.y) < zone.y + 200
+      );
     };
-    if (formValue.z >= 0 && formValue.z <= 9) {
-      this.dataSource.filter = formValue;
-    }
-    else {
-      this.messageService.showError('Please enter a number 0-9', 'Error')
+
+    // Validate formValue before setting filter
+    if (formValue.z != null && formValue.z >= 0 && formValue.z <= 9) { // Check for null or undefined
+      this.dataSource.filter = JSON.stringify(formValue); // Ensure formValue is of type Filter
+    } else {
+      this.messageService.showError('Please enter a number 0-9', 'Error');
     }
   }
+
+
+
+  /*  zoneFilter() {  //    { z: 4, x: 0, y: 201 }
+     const formValue = this.zoneForm.value;
+     this.dataSource.filterPredicate = (data, filter: string) => {
+       const zone: any = this.zones.find(({ z }) => z === Number(filter['z']));
+       return Number(data.x) > Number(zone['x']) && Number(data.x) < Number(zone['x']) + 200 && Number(data.y) > Number(zone['y'])
+         && Number(data.y) < Number(zone['y']) + 200;
+     };
+     if (formValue.z >= 0 && formValue.z <= 9) {
+       this.dataSource.filter = formValue;
+     }
+     else {
+       this.messageService.showError('Please enter a number 0-9', 'Error')
+     }
+   } */
 
 
 }

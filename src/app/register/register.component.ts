@@ -15,7 +15,38 @@ import { CommonModule } from '@angular/common';
 })
 export class RegisterComponent {
 
-  constructor(private fb: FormBuilder, public auth: JwtAuthService, public messageService: MessageService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    public auth: JwtAuthService,
+    public messageService: MessageService,
+    private router: Router
+  ) {
+    this.registrationForm = this.fb.group(
+      {
+        username: ['', [Validators.required, Validators.minLength(3)]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: '',
+        subscribe: false,
+        email: '' // Ensure 'email' field is defined in the form group
+      },
+      { validator: PasswordValidator }
+    );
+
+    const subscribeControl = this.registrationForm.get('subscribe');
+    const emailControl = this.registrationForm.get('email');
+
+    if (subscribeControl && emailControl) {
+      subscribeControl.valueChanges.subscribe((checkedValue) => {
+        if (checkedValue) {
+          emailControl.setValidators(Validators.required);
+        } else {
+          emailControl.clearValidators();
+        }
+        emailControl.updateValueAndValidity();
+      });
+    }
+  }
+  /* constructor(private fb: FormBuilder, public auth: JwtAuthService, public messageService: MessageService, private router: Router) {
     this.registrationForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -34,7 +65,7 @@ export class RegisterComponent {
         email.updateValueAndValidity();
       });
   }
-
+ */
   registrationForm: FormGroup;
 
 

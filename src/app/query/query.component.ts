@@ -29,10 +29,12 @@ import { CommonModule } from '@angular/common';
 })
 export class QueryComponent implements OnInit {
 
-  queryForm: FormGroup;
+  queryForm!: FormGroup;
 
 
-  constructor(private router: Router, private fb: FormBuilder, public psqlService: PsqlService, private messageService: MessageService) { }
+  constructor(private router: Router, private fb: FormBuilder, public psqlService: PsqlService, private messageService: MessageService) {
+
+  }
 
   public dataSource = new MatTableDataSource<any>();
 
@@ -40,9 +42,9 @@ export class QueryComponent implements OnInit {
   enhancements = ['0', '50', '100', '150', '200'];
   qty = 0;
 
-  @ViewChild('nameRef') nameElementRef: ElementRef;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild('nameRef') nameElementRef!: ElementRef;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   ngAfterViewInit() {
     if (this.idToken.user == 'admin') {
@@ -54,8 +56,12 @@ export class QueryComponent implements OnInit {
     }
     this.dataSource.paginator = this.paginator;
   }
+  currentUser = localStorage.getItem("currentUser");
+  idToken = this.currentUser ? JSON.parse(this.currentUser) : null;
 
-  idToken = JSON.parse(localStorage.getItem("currentUser"));
+  //idToken = JSON.parse(localStorage.getItem("currentUser"));
+
+
   ngOnInit() {
     this.psqlService.getCoords("mines", this.idToken)
       .subscribe(mine => {
@@ -64,10 +70,10 @@ export class QueryComponent implements OnInit {
         this.dataSource.sort = this.sort;
       });
 
-
     this.queryForm = this.fb.group({
       query: 'SELECT * FROM (SELECT DISTINCT ON (position) * FROM mines) t ORDER BY RANDOM() LIMIT 30'
     })
+
   }
 
   runQuery() {
