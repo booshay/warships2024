@@ -30,6 +30,8 @@ export class LoginComponent {
 
   login() {
     const formValue = this.loginForm.value;
+    this.messageService.showLoading('Loading data, please wait...');
+
     this.jwtAuth.login(formValue.username, formValue.password)
       .subscribe(user => {
         //

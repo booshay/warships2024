@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, importProvidersFrom } from '@
 import { NavbarComponent } from "../navbar/navbar.component";
 import { PsqlService } from '../psql.service';
 import { MessageService } from '../message.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { JwtAuthService } from '../jwt-auth.service';
 import { User } from '../_models/user';
 import { Filter } from '../_models/filter';
@@ -33,7 +33,7 @@ import { CommonModule } from '@angular/common';
 })
 export class MinesComponent implements OnInit {
 
-  constructor(public auth: JwtAuthService, public router: Router, private psqlService: PsqlService, private fb: FormBuilder, private messageService: MessageService) {
+  constructor(private route: ActivatedRoute, public auth: JwtAuthService, public router: Router, private psqlService: PsqlService, private fb: FormBuilder, private messageService: MessageService) {
     this.myForm = this.fb.group({
       lvl: null,
       type: null,
@@ -92,24 +92,42 @@ export class MinesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
+  /*   ngOnInit(): void {
+      this.auth.currentUser.subscribe(data => {
+        if (data && data.user) {  // Check if data and data.user are not null
+          this.user = data;
+          this.isAdmin = data.user === "admin";
+          this.psqlService.getCoords("mines", this.user)
+            .subscribe(mine => {
+              this.dataSource.data = mine;
+              this.dataSource.paginator = this.paginator; // Set the paginator here
+              this.dataSource.sort = this.sort;
+            });
+        } else {
+          // Handle the case when there is no user (e.g., user is logged out)
+          this.router.navigateByUrl('/login');
+        }
+      });
+    } */
+
   ngOnInit(): void {
+    // Get the resolved data using ActivatedRoute
+    const resolvedData = this.route.snapshot.data['mineData'];
+
+    if (resolvedData) {
+      this.dataSource.data = resolvedData;
+    }
+    this.messageService.hideLoading();
+
     this.auth.currentUser.subscribe(data => {
-      if (data && data.user) {  // Check if data and data.user are not null
+      if (data && data.user) {
         this.user = data;
-        this.isAdmin = data.user === "admin";
-        this.psqlService.getCoords("mines", this.user)
-          .subscribe(mine => {
-            this.dataSource.data = mine;
-            this.dataSource.paginator = this.paginator; // Set the paginator here
-            this.dataSource.sort = this.sort;
-          });
+        this.isAdmin = data.user === 'admin';
       } else {
-        // Handle the case when there is no user (e.g., user is logged out)
         this.router.navigateByUrl('/login');
       }
     });
   }
-
 
   onKeydown(event: any) {
     if (event.key === "ArrowRight") {
