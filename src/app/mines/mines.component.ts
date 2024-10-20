@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, importProvidersFrom } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, importProvidersFrom, AfterViewInit } from '@angular/core';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { PsqlService } from '../psql.service';
 import { MessageService } from '../message.service';
@@ -31,7 +31,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './mines.component.html',
   styleUrl: './mines.component.css',
 })
-export class MinesComponent implements OnInit {
+export class MinesComponent implements OnInit, AfterViewInit {
 
   constructor(private route: ActivatedRoute, public auth: JwtAuthService, public router: Router, private psqlService: PsqlService, private fb: FormBuilder, private messageService: MessageService) {
     this.myForm = this.fb.group({
@@ -116,6 +116,8 @@ export class MinesComponent implements OnInit {
 
     if (resolvedData) {
       this.dataSource.data = resolvedData;
+      //this.dataSource.paginator = this.paginator; // Set the paginator here
+      //this.dataSource.sort = this.sort;
     }
     this.messageService.hideLoading();
 
@@ -127,6 +129,12 @@ export class MinesComponent implements OnInit {
         this.router.navigateByUrl('/login');
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    // Set paginator and sort after the view has initialized
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   onKeydown(event: any) {
