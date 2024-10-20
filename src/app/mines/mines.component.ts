@@ -92,7 +92,16 @@ export class MinesComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  /*   ngOnInit(): void {
+  updateTable() {
+    this.psqlService.getCoords("mines", this.user)
+      .subscribe(mine => {
+        this.dataSource.data = mine;
+        this.dataSource.paginator = this.paginator; // Set the paginator here
+        this.dataSource.sort = this.sort;
+      });
+  }
+
+  /*   updateTable {
       this.auth.currentUser.subscribe(data => {
         if (data && data.user) {  // Check if data and data.user are not null
           this.user = data;
@@ -161,7 +170,8 @@ export class MinesComponent implements OnInit, AfterViewInit {
           } else {
             // Mine does not exist, proceed with adding it
             this.psqlService.addCoord("mines", formValue, this.user).subscribe(() => {
-              this.ngOnInit();
+              //this.ngOnInit();
+              this.updateTable();
               this.messageService.showSuccess('Added. Thank you!!', 'Notification');
               this.myForm.reset();
               this.myForm.controls['enhanced'].setValue('0');
@@ -179,13 +189,15 @@ export class MinesComponent implements OnInit, AfterViewInit {
 
   deleteMine(id: number): void {
     this.psqlService.deleteCoord("mines", id).subscribe(() => {
-      this.ngOnInit();
+      //this.ngOnInit();
+      this.updateTable();
     })
   }
 
   updateMine(id: number, enhancement: number) {
     this.psqlService.updateCoord("mines", id, enhancement).subscribe(() => {
-      this.ngOnInit();
+      //this.ngOnInit();
+      this.updateTable();
     })
   }
 
