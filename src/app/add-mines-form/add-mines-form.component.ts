@@ -38,6 +38,7 @@ export class AddMinesFormComponent {
   }
 
   @Input() user: User | null = null;
+  @Input() isAdmin: Boolean | null = null;
 
   myForm: FormGroup;
   levels = ['All', 44, 46, 48, 50];
@@ -45,7 +46,6 @@ export class AddMinesFormComponent {
   enhancements = ['0', '50', '100', '150', '200'];
   tileTypes = ['Gold', 'Iron', 'Oil', 'Copper', 'Uranium'];
   coordCheckResult!: {}
-  isAdmin!: Boolean;
   @ViewChild('xRef') nameElementRef!: ElementRef;
   @ViewChild('yRef') nameElementRefy!: ElementRef;
   @ViewChild('nameRef2') nameElementRef2!: MatSelect;

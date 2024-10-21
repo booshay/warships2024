@@ -39,17 +39,12 @@ export class MinesComponent implements OnInit, AfterViewInit {
 
   public displayedColumns = ['lvl', 'type', 'x', 'y', 'enhanced', 'delete'];
   public dataSource = new MatTableDataSource<any>();
-  levels = ['All', 44, 46, 48, 50];
-  levelsSelect = ['44', '46', '48', '50'];
+
   enhancements = ['0', '50', '100', '150', '200'];
-  tileTypes = ['Gold', 'Iron', 'Oil', 'Copper', 'Uranium'];
-  coordCheckResult!: {}
   isAdmin!: Boolean;
   user!: User;
   lvlvalue!: number;
   enhanced!: number;
-  typevalue!: string;
-  temp = '';
   zones = [
     { z: 1, x: 0, y: 401 },
     { z: 2, x: 201, y: 401 },
