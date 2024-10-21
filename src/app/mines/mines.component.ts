@@ -108,8 +108,6 @@ export class MinesComponent implements OnInit, AfterViewInit {
 
     if (resolvedData) {
       this.dataSource.data = resolvedData;
-      //this.dataSource.paginator = this.paginator; // Set the paginator here
-      //this.dataSource.sort = this.sort;
     }
     this.messageService.hideLoading();
 
@@ -242,9 +240,6 @@ export class MinesComponent implements OnInit, AfterViewInit {
     this.dataSource.filterPredicate = (data, filter: string) => {
       return data.type == filter && data.lvl == this.lvlvalue;
     };
-    //if (filterValue === 'All') {
-    //filterValue = '';
-    //}
     this.dataSource.filter = filterValue.toString();
   }
 
@@ -273,9 +268,7 @@ export class MinesComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = JSON.stringify(formValue); // Ensure formValue is of type Filter
   }
 
-
-
-  zoneFilter(formValue: any) {  //    { z: 4, x: 0, y: 201 }
+  zoneFilter(formValue: any) {
 
     this.dataSource.filterPredicate = (data, filterString: string) => {
       const filter: Filter = JSON.parse(filterString);
