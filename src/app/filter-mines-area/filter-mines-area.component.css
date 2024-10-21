@@ -1,0 +1,68 @@
+.border {
+    width: 25%;
+    border-style: double;
+}
+
+.borderRutile {
+    width: 300px;
+    border-style: double;
+}
+
+.borderSelect {
+    width: 20px;
+    /* Set a small width to keep the column narrow */
+    min-width: 50px;
+    /* Ensure the dropdown has enough space to display */
+    height: auto;
+    /* Auto height for proper dropdown behavior */
+    margin: 0 4px;
+    /* Keep the margin as needed */
+}
+
+.padding {
+    margin: 10px;
+}
+
+.mytable {
+    width: 33%;
+}
+
+table {
+    width: 33%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-bottom: 70px;
+
+}
+
+th.mat-header-cell {
+    text-align: left;
+
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #754caf !important;
+    color: white;
+}
+
+.enhancedCol {
+    text-align: center !important;
+    width: 5%;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.radio-button {
+    margin: 5px;
+}

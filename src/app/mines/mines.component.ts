@@ -7,6 +7,7 @@ import { JwtAuthService } from '../jwt-auth.service';
 import { User } from '../_models/user';
 import { Filter } from '../_models/filter';
 import { AddMinesFormComponent } from "../add-mines-form/add-mines-form.component";
+import { FilterMinesAreaComponent } from "../filter-mines-area/filter-mines-area.component";
 
 //material
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -28,7 +29,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-mines',
   standalone: true,
-  imports: [NavbarComponent, AddMinesFormComponent, FormsModule, ReactiveFormsModule, MatIconModule, MatTableModule, MatButtonModule, MatRadioModule, MatSelectModule, MatPaginatorModule, MatSortModule, CommonModule, MatFormFieldModule, MatInputModule, AddMinesFormComponent],
+  imports: [NavbarComponent, AddMinesFormComponent, FormsModule, ReactiveFormsModule, MatIconModule, MatTableModule, MatButtonModule, MatRadioModule, MatSelectModule, MatPaginatorModule, MatSortModule, CommonModule, MatFormFieldModule, MatInputModule, AddMinesFormComponent, FilterMinesAreaComponent],
   templateUrl: './mines.component.html',
   styleUrl: './mines.component.css',
 })
@@ -266,8 +267,7 @@ export class MinesComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue.toString();
   }
 
-  rutileFilter() {
-    const formValue: Filter = this.rutileForm.value;
+  rutileFilter(formValue: any) {
 
     this.dataSource.filterPredicate = (data, filterString: string) => {
       const filter: Filter = JSON.parse(filterString); // Ensure you provide a valid JSON string
@@ -294,8 +294,7 @@ export class MinesComponent implements OnInit, AfterViewInit {
 
 
 
-  zoneFilter() {  //    { z: 4, x: 0, y: 201 }
-    const formValue: Filter = this.zoneForm.value;
+  zoneFilter(formValue: any) {  //    { z: 4, x: 0, y: 201 }
 
     this.dataSource.filterPredicate = (data, filterString: string) => {
       const filter: Filter = JSON.parse(filterString);

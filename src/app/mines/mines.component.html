@@ -1,53 +1,7 @@
 <app-navbar></app-navbar>
 <app-add-mines-form [user]="user"></app-add-mines-form>
+<app-filter-mines-area></app-filter-mines-area>
 
-<!--Filter Area-->
-<div>
-    <p>------------------------------------------------------</p>
-    <p>Select level first, then mine type</p>
-    <mat-radio-group class="radio-group" [(ngModel)]="lvlvalue">
-        <mat-radio-button class="radio-button" *ngFor="let level of levels" [value]="level"
-            (click)="applyRadioFilter(level)">
-            {{level}}</mat-radio-button>
-    </mat-radio-group>
-    <mat-radio-group class="radio-group" [(ngModel)]="typevalue">
-        <mat-radio-button class="radio-button" *ngFor="let type of tileTypes" [value]="type"
-            (click)="applyRadioFilter2(type)">
-            {{type}}</mat-radio-button>
-    </mat-radio-group>
-
-    <div class="borderRutile">
-        <!---->
-        <p>Input the X-Y for the bottom left coord of the rutile area</p>
-        <form [formGroup]="rutileForm">
-            <mat-form-field class="padding">
-                <input type="tel" matInput placeholder="X" formControlName="x" required>
-            </mat-form-field>
-
-            <mat-form-field class="padding">
-                <input type="tel" matInput placeholder="Y" formControlName="y" required>
-            </mat-form-field>
-
-            <button mat-stroked-button color="primary" type="submit" [disabled]="!rutileForm.valid"
-                (click)="rutileFilter()">Rutile</button>
-        </form>
-    </div>
-
-    <!--NewFOrm-->
-    <div class="borderRutile">
-        <!---->
-        <p>Input the zone number, zone 1 is the top left, 3 is top right, 6 middle right... etc</p>
-        <form [formGroup]="zoneForm">
-            <mat-form-field class="padding">
-                <input type="tel" matInput placeholder="Z" formControlName="z" required>
-            </mat-form-field>
-
-            <button mat-stroked-button color="primary" type="submit" [disabled]="!zoneForm.valid"
-                (click)="zoneFilter()">Zone</button>
-        </form>
-    </div>
-    <!--EndNewFOrm-->
-</div>
 
 <!--The Table-->
 <div class="mytable">
