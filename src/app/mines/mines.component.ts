@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { JwtAuthService } from '../jwt-auth.service';
 import { User } from '../_models/user';
 import { Filter } from '../_models/filter';
+import { AddMinesFormComponent } from "../add-mines-form/add-mines-form.component";
 
 //material
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -27,7 +28,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-mines',
   standalone: true,
-  imports: [NavbarComponent, FormsModule, ReactiveFormsModule, MatIconModule, MatTableModule, MatButtonModule, MatRadioModule, MatSelectModule, MatPaginatorModule, MatSortModule, CommonModule, MatFormFieldModule, MatInputModule],
+  imports: [NavbarComponent, AddMinesFormComponent, FormsModule, ReactiveFormsModule, MatIconModule, MatTableModule, MatButtonModule, MatRadioModule, MatSelectModule, MatPaginatorModule, MatSortModule, CommonModule, MatFormFieldModule, MatInputModule, AddMinesFormComponent],
   templateUrl: './mines.component.html',
   styleUrl: './mines.component.css',
 })

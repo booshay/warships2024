@@ -1,0 +1,48 @@
+<div>
+    <form [formGroup]="myForm">
+
+        <mat-form-field class="padding">
+            <mat-label>Tile Level</mat-label>
+            <mat-select #nameRef2 formControlName="lvl" required>
+                <mat-option *ngFor="let lvl of levelsSelect" [value]="lvl">
+                    {{lvl}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="padding">
+            <mat-label>Tile Type</mat-label>
+            <mat-select #nameRef3 formControlName="type" required>
+                <mat-option *ngFor="let type of tileTypes" [value]="type">
+                    {{type}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="padding">
+            <mat-label>X</mat-label>
+            <input (keydown)="onKeydown($event)" #xRef type="tel" matInput formControlName="x" required>
+        </mat-form-field>
+
+        <mat-form-field class="padding">
+            <mat-label>Y</mat-label>
+            <input #yRef type="tel" matInput formControlName="y" required>
+        </mat-form-field>
+
+        <mat-form-field class="padding">
+            <mat-label>Enhancement</mat-label>
+            <mat-select formControlName="enhanced" required>
+                <mat-option *ngFor="let enhance of enhancements" [value]="enhance">
+                    {{enhance}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button mat-stroked-button color="accent" (click)="coordCheck()" type="submit"
+            *ngIf="!myForm.valid && isAdmin">Coord
+            Check</button>
+
+        <button mat-stroked-button color="primary" type="submit" [disabled]="!myForm.valid" (click)="addMine()">Submit
+            Form</button>
+    </form>
+</div>
