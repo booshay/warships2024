@@ -14,9 +14,9 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatRadioModule } from '@angular/material/radio';
+//import { MatFormFieldModule } from '@angular/material/form-field';
+//import { MatInputModule } from '@angular/material/input';
+//import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -29,36 +29,13 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-mines',
   standalone: true,
-  imports: [NavbarComponent, AddMinesFormComponent, FormsModule, ReactiveFormsModule, MatIconModule, MatTableModule, MatButtonModule, MatRadioModule, MatSelectModule, MatPaginatorModule, MatSortModule, CommonModule, MatFormFieldModule, MatInputModule, AddMinesFormComponent, FilterMinesAreaComponent],
+  imports: [NavbarComponent, AddMinesFormComponent, FormsModule, ReactiveFormsModule, MatIconModule, MatTableModule, MatButtonModule, /* MatRadioModule, */ MatSelectModule, MatPaginatorModule, MatSortModule, CommonModule, /* MatFormFieldModule, */ /* MatInputModule, */ AddMinesFormComponent, FilterMinesAreaComponent],
   templateUrl: './mines.component.html',
   styleUrl: './mines.component.css',
 })
 export class MinesComponent implements OnInit, AfterViewInit {
 
-  constructor(private route: ActivatedRoute, public auth: JwtAuthService, public router: Router, private psqlService: PsqlService, private fb: FormBuilder, private messageService: MessageService) {
-    this.myForm = this.fb.group({
-      lvl: null,
-      type: null,
-      x: null,
-      y: null,
-      enhanced: '0'
-    });
-
-    this.rutileForm = this.fb.group({
-      x: null,
-      y: null
-    });
-
-    this.zoneForm = this.fb.group({
-      z: null
-    });
-    this.myForm.controls['enhanced'].setValue('0');
-  }
-
-
-  myForm: FormGroup;
-  rutileForm: FormGroup;
-  zoneForm: FormGroup;
+  constructor(private route: ActivatedRoute, public auth: JwtAuthService, public router: Router, private psqlService: PsqlService, private fb: FormBuilder, private messageService: MessageService) { }
 
   public displayedColumns = ['lvl', 'type', 'x', 'y', 'enhanced', 'delete'];
   public dataSource = new MatTableDataSource<any>();
@@ -133,41 +110,6 @@ export class MinesComponent implements OnInit, AfterViewInit {
     }
   }
 
-  addMine() {
-    const formValue = this.myForm.value;
-
-    if (this.validCoords(formValue)) {
-      const position = formValue.x + ',' + formValue.y;
-
-      // Check existence in the database instead of in-memory data
-      this.psqlService.checkIfCoordExists("mines", position, this.user).subscribe({
-        next: (existsResponse) => {
-          if (existsResponse.exists) {
-            // Mine already exists, show error message
-            this.messageService.showError('That tile already exists. Add another.', 'Error');
-            this.myForm.reset();
-            this.myForm.controls['enhanced'].setValue('0');
-            this.nameElementRef.nativeElement.focus();
-          } else {
-            // Mine does not exist, proceed with adding it
-            this.psqlService.addCoord("mines", formValue, this.user).subscribe(() => {
-              //this.ngOnInit();
-              this.updateTable();
-              this.messageService.showSuccess('Added. Thank you!!', 'Notification');
-              this.myForm.reset();
-              this.myForm.controls['enhanced'].setValue('0');
-              this.nameElementRef.nativeElement.focus();
-            });
-          }
-        },
-        error: (err) => {
-          console.error('Error checking if coordinate exists:', err);
-          this.messageService.showError('An error occurred while checking the tile. Please try again.', 'Error');
-        }
-      });
-    }
-  }
-
   deleteMine(id: number): void {
     this.psqlService.deleteCoord("mines", id).subscribe(() => {
       //this.ngOnInit();
@@ -182,47 +124,9 @@ export class MinesComponent implements OnInit, AfterViewInit {
     })
   }
 
-  validLevel() {
-    const lvl = this.myForm.value.lvl;
-    const acceptLvl = [44, 46, 48, 50];
-
-    if (lvl !== null && acceptLvl.indexOf(Number(lvl)) === -1) {
-      this.messageService.showError('Only levels 44, 46, 48 and 50 are accepted', 'Error');
-      this.myForm.reset();
-    }
-  }
-
-  validCoords(data: any) {
-    if (data.x <= 600 && data.x >= 1 && data.y >= 1 && data.y <= 600) {
-      return true;
-    } else {
-      this.messageService.showError('Coords must fall between 1 and 600', 'Error');
-      return false;
-    }
-  }
-
   signOut() {
     this.router.navigateByUrl('/login');
     this.auth.logout;
-  }
-
-  coordCheck() {
-    const formValue = this.myForm.value;
-    if (this.validCoords(formValue)) {
-      const position = formValue.x + ',' + formValue.y
-      this.psqlService.coordCheck(position).subscribe(data => {
-        if (data.length > 0) {
-          this.messageService.showError('Mine already exists', 'Error');
-          this.myForm.reset();
-          this.nameElementRef.nativeElement.focus();
-        }
-        else {
-          this.messageService.showSuccess('Does not exist yet, please continue adding', 'Notification')
-          this.myForm.controls['enhanced'].setValue('0');
-          this.nameElementRef2.focus()
-        }
-      })
-    }
   }
 
   applyRadioFilter(filterValue: string | number): void {
@@ -284,6 +188,5 @@ export class MinesComponent implements OnInit, AfterViewInit {
       this.messageService.showError('Please enter a number 0-9', 'Error')
     }
   }
-
 
 }
