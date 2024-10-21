@@ -16,11 +16,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MessageService } from '../message.service';
 import { MinesComponent } from '../mines/mines.component';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-filter-mines-area',
   standalone: true,
-  imports: [MatRadioModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatButtonModule, MatInputModule],
+  imports: [MatRadioModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatButtonModule, MatInputModule, CommonModule],
   templateUrl: './filter-mines-area.component.html',
   styleUrl: './filter-mines-area.component.css'
 })
@@ -41,10 +42,12 @@ export class FilterMinesAreaComponent {
   zoneForm: FormGroup;
   lvlvalue!: number;
   typevalue!: string;
+  levels = ['All', 44, 46, 48, 50];
+  tileTypes = ['Gold', 'Iron', 'Oil', 'Copper', 'Uranium'];
+
 
   applyRadioFilter(filterValue: string | number): void {
-    this.lvlvalue = Number(filterValue);
-    this.minesComponent.applyRadioFilter(this.lvlvalue)
+    this.minesComponent.applyRadioFilter(filterValue)
   }
 
   applyRadioFilter2(filterValue: string) {

@@ -89,7 +89,6 @@ export class MinesComponent implements OnInit, AfterViewInit {
   @ViewChild('xRef') nameElementRef!: ElementRef;
   @ViewChild('yRef') nameElementRefy!: ElementRef;
   @ViewChild('nameRef2') nameElementRef2!: MatSelect;
-  @ViewChild('nameRef3') nameElementRef3!: MatSelect;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
@@ -102,24 +101,6 @@ export class MinesComponent implements OnInit, AfterViewInit {
         this.dataSource.sort = this.sort;
       });
   }
-
-  /*   updateTable {
-      this.auth.currentUser.subscribe(data => {
-        if (data && data.user) {  // Check if data and data.user are not null
-          this.user = data;
-          this.isAdmin = data.user === "admin";
-          this.psqlService.getCoords("mines", this.user)
-            .subscribe(mine => {
-              this.dataSource.data = mine;
-              this.dataSource.paginator = this.paginator; // Set the paginator here
-              this.dataSource.sort = this.sort;
-            });
-        } else {
-          // Handle the case when there is no user (e.g., user is logged out)
-          this.router.navigateByUrl('/login');
-        }
-      });
-    } */
 
   ngOnInit(): void {
     // Get the resolved data using ActivatedRoute

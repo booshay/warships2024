@@ -49,7 +49,6 @@ export class AddMinesFormComponent {
   @ViewChild('xRef') nameElementRef!: ElementRef;
   @ViewChild('yRef') nameElementRefy!: ElementRef;
   @ViewChild('nameRef2') nameElementRef2!: MatSelect;
-  @ViewChild('nameRef3') nameElementRef3!: MatSelect;
 
   onKeydown(event: any) {
     if (event.key === "ArrowRight") {
