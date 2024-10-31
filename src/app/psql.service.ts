@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Mines } from './_models/mines';
 
 @Injectable({
   providedIn: 'root'
@@ -14,31 +15,31 @@ export class PsqlService {
     return this.http.get(this.baseUrl)
   }
 
-  getCoords(type: string, user: any): Observable<any> {
+  getCoords(type: string, user: any): Observable<Mines[]> {
     const body = { type, user }; // Structure the request body
     return this.http.post<any>(`${this.baseUrl}get${type}`, body); // Send the structured body
   }
 
-  addCoord(type: string, data: any, user: any): Observable<any> {
+  addCoord(type: string, data: any, user: any): Observable<Mines[]> {
     const body = { ...data, user }; // Attach user to data object
     return this.http.post<any>(`${this.baseUrl}${type}`, body); // Post structured data
   }
 
-  deleteCoord(type: string, id: number): Observable<any> {
+  deleteCoord(type: string, id: number): Observable<Mines[]> {
     return this.http.delete<any>(`${this.baseUrl}${type}/${id}`); // Direct delete
   }
 
-  updateCoord(type: string, id: number, enhancement: any): Observable<any> {
+  updateCoord(type: string, id: number, enhancement: any): Observable<Mines[]> {
     const body = { enhanced: enhancement }; // Structured body for update
     return this.http.put<any>(`${this.baseUrl}${type}/${id}`, body); // Put request
   }
 
-  runQuery(query: { query: string }): Observable<any> {
+  runQuery(query: { query: string }): Observable<Mines[]> {
     //  const body = { query }; // Wrap query string in body
     return this.http.post<any>(`${this.baseUrl}query`, query); // Post query
   }
 
-  coordCheck(coords: any): Observable<any> {
+  coordCheck(coords: any): Observable<Mines[]> {
     const body = { position: coords }; // Structured body for coordCheck
     return this.http.post<any>(`${this.baseUrl}coordCheck`, body); // Post request
   }
